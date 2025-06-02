@@ -1,10 +1,14 @@
 Rails.application.routes.draw do
- devise_for :users,
-             controllers: {
-               sessions: "users/sessions",
-               registrations: "users/registrations"
-             }
-  # Outras rotas da sua API
-  # Defines the root path route ("/")
-  root "initial_page#index"
+  devise_for :users,
+    controllers: {
+      sessions: "users/sessions",
+      registrations: "users/registrations"
+    },
+    defaults: { format: :json }
+
+  namespace :api do
+    namespace :v1 do
+      resources :clients
+    end
+  end
 end

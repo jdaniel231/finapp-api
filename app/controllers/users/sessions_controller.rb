@@ -4,11 +4,11 @@ class Users::SessionsController < Devise::SessionsController
   private
 
   def respond_with(resource, _opts = {})
-    token = encode_token({ user_id: resource.id })
-
+    token = request.env["warden-jwt_auth.token"] # Obtém o token JWT gerado pelo Devise JWT
     render json: {
       status: { code: 200, message: "Logged in successfully." },
-      data: UserSerializer.new(resource).serializable_hash[:data][:attributes].merge({ token: token })
+      data: UserSerializer.new(resource).serializable_hash[:data][:attributes],
+      authorization: token
     }, status: :ok
   end
 
@@ -24,9 +24,5 @@ class Users::SessionsController < Devise::SessionsController
         message: "Couldn't find an active session."
       }, status: :unauthorized
     end
-  end
-
-  def encode_token(payload)
-    JWT.encode(payload, Rails.application.secret_key_base)
   end
 end
