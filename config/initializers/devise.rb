@@ -19,15 +19,17 @@ Devise.setup do |config|
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
   config.jwt do |jwt|
-    jwt.secret = Rails.application.credentials.fetch(:secret_key_base)
+    jwt.secret = Rails.application.secret_key_base
     jwt.dispatch_requests = [
       [ "POST", %r{^/users/sign_in$} ]
     ]
     jwt.revocation_requests = [
-      [ "DELETE", %r{^/users/sign_out$} ]
+      [ "POST", %r{^/users/sign_out$} ]
     ]
+    # jwt.revocation_strategy = JwtDenylist
     jwt.expiration_time = 1.day.to_i
   end
+
   # config.parent_controller = 'DeviseController'
 
   # ==> Mailer Configuration
