@@ -11,5 +11,6 @@ class TicketService < ApplicationRecord
     ticket.reload
     ticket.calculate_total_value
     ticket.save!
+  rescue ActiveRecord::RecordNotFound
   end
 end

@@ -12,6 +12,12 @@ Rails.application.routes.draw do
       resources :services
       resources :payment_types
       resources :tickets
+      resources :account_pays do
+        member do
+          post :register_payment
+          post :cancel_payment
+        end
+      end
     end
   end
 end
