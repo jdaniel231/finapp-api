@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_06_030216) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_14_144555) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -45,6 +45,26 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_06_030216) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "ticket_services", force: :cascade do |t|
+    t.bigint "ticket_id", null: false
+    t.bigint "service_id", null: false
+    t.decimal "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["service_id"], name: "index_ticket_services_on_service_id"
+    t.index ["ticket_id"], name: "index_ticket_services_on_ticket_id"
+  end
+
+  create_table "tickets", force: :cascade do |t|
+    t.bigint "client_id", null: false
+    t.date "opening_date"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.decimal "total_value", precision: 10, scale: 2, default: "0.0"
+    t.index ["client_id"], name: "index_tickets_on_client_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -58,4 +78,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_06_030216) do
   end
 
   add_foreign_key "clients", "users"
+  add_foreign_key "ticket_services", "services"
+  add_foreign_key "ticket_services", "tickets"
+  add_foreign_key "tickets", "clients"
 end

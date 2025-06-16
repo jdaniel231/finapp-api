@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       resources :clients
       resources :services
       resources :payment_types
+      resources :tickets
     end
   end
 end
