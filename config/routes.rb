@@ -18,6 +18,7 @@ Rails.application.routes.draw do
           post :cancel_payment
         end
       end
+      resources :rede_card_transactions, only: [:create, :index]
     end
   end
 end
