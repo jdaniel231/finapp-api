@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_16_201020) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_06_015337) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -46,6 +46,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_16_201020) do
   create_table "payment_types", force: :cascade do |t|
     t.string "name"
     t.decimal "taxa"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "rede_card_transactions", force: :cascade do |t|
+    t.string "tid"
+    t.string "nsu"
+    t.string "authorization_code"
+    t.string "response_code"
+    t.string "response_message"
+    t.decimal "amount"
+    t.integer "installments"
+    t.string "card_brand"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

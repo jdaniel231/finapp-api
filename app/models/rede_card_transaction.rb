@@ -1,0 +1,2 @@
+class RedeCardTransaction < ApplicationRecord
+end
